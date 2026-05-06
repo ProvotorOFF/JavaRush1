@@ -12,10 +12,26 @@ public class Validator {
     }
 
     public boolean isValidKey(int key) {
-        return key < this.cipher.getAbc().size();
+        return key >= 0 && key < cipher.getAbc().size();
     }
 
     public boolean isFileExists(String filePath) {
         return Files.exists(Path.of(filePath));
+    }
+
+    public boolean isValidText(String text) {
+        String lower = text.toLowerCase();
+
+        String[] words = {" и ", " в ", " не ", " на ", " что ", " я "};
+
+        int score = 0;
+
+        for (String word : words) {
+            if (lower.contains(word)) {
+                score++;
+            }
+        }
+
+        return score >= 2;
     }
 }

@@ -6,7 +6,9 @@ public class Cipher {
     private final ArrayList<Character> abc = new ArrayList<>();
 
     public Cipher() {
-        for (char c = 'a'; c <= 'z'; c++) {
+        String alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя .,:-!?\"";
+
+        for (char c : alphabet.toCharArray()) {
             abc.add(c);
         }
     }
@@ -16,21 +18,20 @@ public class Cipher {
     }
 
     public String encrypt(String input, int shift) {
+        input = input.toLowerCase();
         char[] characters = input.toCharArray();
+
         for (int i = 0; i < characters.length; i++) {
-            int idx = this.abc.indexOf(characters[i]);
+            int idx = abc.indexOf(characters[i]);
 
             if (idx == -1) {
                 continue;
             }
 
             idx = (idx + shift) % abc.size();
+            if (idx < 0) idx += abc.size();
 
-            if (idx < 0) {
-                idx += abc.size();
-            }
-
-            characters[i] = this.abc.get(idx);
+            characters[i] = abc.get(idx);
         }
 
         return new String(characters);
